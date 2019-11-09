@@ -1,0 +1,33 @@
+- name: get current libreelec version
+  shell: "cat /etc/release"
+  register: libre_version
+  changed_when: false
+
+- debug: 
+   msg:
+    - "current version: {{ libre_version.stdout }}"
+    - "new version: {{ libreelec.version_string }}"
+
+- name: create {{ libreelec.download_base }} directory
+  file:
+    path: "{{ libreelec.download_base }}"
+    state: directory
+    mode: 0700
+
+- name: download new version
+  get_url:
+    url: "{{ libreelec.download_base }}{{ libreelec.version_string }}{{ libreelec.file_type }}"
+    dest: /storage/.update
+  when: libre_version.stdout != version_string
+  notify: Reboot server
+
+  #kodinerds repo
+- name: download kodinerds repo
+  get_url:
+    url: "{{ libreelec.kodinerds_repo }}"
+    dest: "{{ libreelec.repo_zip_directory }}"
+
+- name: unzip kodinerds repo
+  shell: "unzip {{ libreelec.repo_zip_directory }}{{ libreelec.kodinerds_repo | basename }} -d {{ libreelec.repo_directory }}"
+  notify: Reboot server
+

@@ -1,0 +1,7 @@
+libreelec:
+  download_base: "http://releases.libreelec.tv/LibreELEC-"
+  version_string: "RPi2.arm-9.1.501" #get your version string from: https://libreelec.tv/downloads_new/raspberry-pi-3-3/
+  file_type: ".img.gz"
+  kodinerds_repo: https://github.com/kodinerds/repo/raw/master/repository.kodinerds.zip
+  repo_zip_directory: /storage/.kodi/addons/packages/
+  repo_directory: /storage/.kodi/addons/

@@ -1,0 +1,4 @@
+reboot:
+  timeout: 300
+
+
